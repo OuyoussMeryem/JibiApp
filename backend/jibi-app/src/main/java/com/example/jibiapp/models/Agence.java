@@ -27,6 +27,7 @@ public class Agence {
     private Compte compte;
     @OneToOne
     private Image image;
-
-
+    @OneToMany(mappedBy = "agence", cascade = CascadeType.ALL)
+    private List<ClientAgence> clientAgences = new ArrayList<>();
+    
 }

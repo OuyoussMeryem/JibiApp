@@ -21,8 +21,8 @@ public class CarteBancaire {
     private String nomCarte;
     private LocalDate dateExpiration;
     private String codeCvv;
-    private String typeCarte; // Par exemple: "Visa", "MasterCard", etc.
+    private String typeCarte;
     @OneToOne
-    private Compte compte; // Assuming there's an Account class defined elsewhere
+    private Compte compte;
 
 }

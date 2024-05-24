@@ -22,6 +22,7 @@ public class Service {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @Enumerated(EnumType.STRING)
     private serviceType type;
     private boolean valable;
     @ManyToOne

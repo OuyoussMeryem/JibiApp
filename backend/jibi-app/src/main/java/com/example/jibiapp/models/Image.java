@@ -18,8 +18,7 @@ public class Image {
     private String name;
     private String imageUrl;
     private String imageId;
-    @OneToOne(mappedBy = "image")
-    private Agence agence;
+
 
 
     public Image(String name, String imageUrl, String imageId) {

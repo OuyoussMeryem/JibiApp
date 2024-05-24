@@ -19,6 +19,7 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Double montant;
+    @Enumerated(EnumType.STRING)
     private StatusTransaction statut;
     private Date date;
     @ManyToOne

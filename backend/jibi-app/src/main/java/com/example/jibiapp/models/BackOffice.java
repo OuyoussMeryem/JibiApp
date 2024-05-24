@@ -2,6 +2,8 @@ package com.example.jibiapp.models;
 
 import com.example.jibiapp.enums.Role;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,6 +19,7 @@ import java.util.List;
 public class BackOffice extends UserApp{
     @OneToMany
     private List<Agent> agents=new ArrayList<>();
+    @Enumerated(EnumType.STRING)
     private Role role;
     public BackOffice(){
         super();

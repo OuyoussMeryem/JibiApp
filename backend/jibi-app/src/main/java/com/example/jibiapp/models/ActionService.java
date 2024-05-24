@@ -20,6 +20,7 @@ public class ActionService {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Double montant;
+    @Enumerated(EnumType.STRING)
     private EtatActionService etat;
     private LocalDateTime date;
     @ManyToOne
