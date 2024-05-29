@@ -29,11 +29,12 @@ public class Compte {
     private Client client;
     @OneToOne(mappedBy = "compte")
     private Agence agence;
-    @OneToMany(mappedBy = "compte", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "compte", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Transaction> transactions=new ArrayList<>();
 
 
-    public boolean hasSufficientBalance(Double amount) {
+  /*  public boolean hasSufficientBalance(Double amount) {
+
         switch (type_compte) {
             case Compte_200:
                 return solde >= 200 && solde >= amount;
@@ -46,7 +47,24 @@ public class Compte {
         }
     }
 
+*/
 
+    private static final double MIN_SOLDE_COMPTE_200 = 200.0;
+    private static final double MIN_SOLDE_COMPTE_5000 = 5000.0;
+    private static final double MIN_SOLDE_COMPTE_20000 = 20000.0;
+
+    public boolean hasSufficientBalance(Double amount) {
+        switch (type_compte) {
+            case Compte_200:
+                return solde >= MIN_SOLDE_COMPTE_200 + amount;
+            case Compte_5000:
+                return solde >= MIN_SOLDE_COMPTE_5000 + amount;
+            case Compte_20000:
+                return solde >= MIN_SOLDE_COMPTE_20000 + amount;
+            default:
+                return false;
+        }
+    }
     public boolean debitAccount(Double amount) {
         if (hasSufficientBalance(amount)) {
             solde -= amount;
@@ -56,4 +74,21 @@ public class Compte {
         }
     }
 
+    public void creditAccount(Double amount) {
+        solde += amount;
+    }
+
+    @Override
+    public String toString() {
+        return "Compte{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", solde=" + solde +
+                ", type_compte=" + type_compte +
+                ", carteBancaire=" + carteBancaire +
+                ", client=" + client +
+                ", agence=" + agence +
+                ", transactions=" + transactions +
+                '}';
+    }
 }

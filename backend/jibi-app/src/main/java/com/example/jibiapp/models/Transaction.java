@@ -21,13 +21,18 @@ public class Transaction {
     private Double montant;
     private StatusTransaction statut;
     private Date date;
+
     @ManyToOne
     private Compte compte; // Compte associé à la transaction
+
     @OneToOne
     private ActionService actionService; // Facture associée à la transaction
+
     @OneToOne
     private Paiment paiment;
 
+    @ManyToOne
+    private CMIService cmiService; // CMIService associé à la transaction
 
     public void mettreEnAttente() { this.statut = StatusTransaction.ENATTENTE; }
 
@@ -47,7 +52,7 @@ public class Transaction {
 
     // Validation method
     public boolean isValidMontant() {
-        return this.montant != null && this.montant > 0;
+        return this.montant != null && this.montant >= actionService.getMontant() && this.montant <=compte.getSolde();
     }
 
     // State check methods
@@ -95,8 +100,27 @@ public class Transaction {
         if (paiment != null) {
             System.out.println("Paiment ID: " + paiment.getId());
         }
+        if (cmiService != null) {
+            System.out.println("CMIService ID: " + cmiService.getId());
+        }
     }
 
+    // Set CMIService method
+    public void setCmiService(CMIService cmiService) {
+        this.cmiService = cmiService;
+    }
 
-
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "id=" + id +
+                ", montant=" + montant +
+                ", statut=" + statut +
+                ", date=" + date +
+                ", compte=" + compte +
+                ", actionService=" + actionService +
+                ", paiment=" + paiment +
+                ", cmiService=" + cmiService +
+                '}';
+    }
 }

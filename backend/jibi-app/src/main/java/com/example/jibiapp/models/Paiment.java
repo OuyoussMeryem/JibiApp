@@ -22,8 +22,22 @@ public class Paiment {
     @OneToOne(mappedBy = "paiment")
     private Transaction transaction;
     @ManyToOne
-    private Service service;
+    private Services service;
     @ManyToOne
     private Client client;
 
+    public Paiment(Double montant) {
+        this.montant = montant;
+    }
+    @Override
+    public String toString() {
+        return "Paiment{" +
+                "id=" + id +
+                ", montant=" + montant +
+                ", datePaiment=" + datePaiment +
+                ", transaction=" + transaction +
+                ", service=" + service +
+                ", client=" + client +
+                '}';
+    }
 }

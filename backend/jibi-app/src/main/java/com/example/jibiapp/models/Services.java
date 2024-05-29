@@ -1,6 +1,5 @@
 package com.example.jibiapp.models;
 
-import com.example.jibiapp.enums.StatusTransaction;
 import com.example.jibiapp.enums.serviceType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -17,7 +16,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Service {
+public class Services {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

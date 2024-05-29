@@ -14,7 +14,6 @@ public class ServiceActionService {
     @Autowired
     private ActionServiceRepo actionServiceRepo;
     public List<ActionService> getAllActionServices() {
-
         return actionServiceRepo.findAll();
     }
 

@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/JibiApp-theProjectInfrastructure.iml" filepath="$PROJECT_DIR$/.idea/JibiApp-theProjectInfrastructure.iml" />
-      <module fileurl="file://$PROJECT_DIR$/backend/jibi-app/jibi-app.iml" filepath="$PROJECT_DIR$/backend/jibi-app/jibi-app.iml" />
     </modules>
   </component>
 </project>

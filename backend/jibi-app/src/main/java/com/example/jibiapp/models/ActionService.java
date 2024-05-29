@@ -1,7 +1,6 @@
 package com.example.jibiapp.models;
 
 import com.example.jibiapp.enums.EtatActionService;
-import com.example.jibiapp.enums.serviceType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,16 +19,27 @@ public class ActionService {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Double montant;
-    private EtatActionService etat;
+    private EtatActionService etat ;
     private LocalDateTime date;
     @ManyToOne
     private Client client;
     @ManyToOne
-    private Service service;
+    private Services service;
     @OneToOne(mappedBy = "actionService")
     private Transaction transaction;
 
-
+    @Override
+    public String toString() {
+        return "ActionService{" +
+                "id=" + id +
+                ", montant=" + montant +
+                ", etat=" + etat +
+                ", date=" + date +
+                ", client=" + client +
+                ", service=" + service +
+                ", transaction=" + transaction +
+                '}';
+    }
     public void mettreEnAttente() {
         this.etat = EtatActionService.ENATTEND;
     }

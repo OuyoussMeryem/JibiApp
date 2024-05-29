@@ -22,7 +22,7 @@ public class Agence {
     @OneToMany(mappedBy = "agence" ,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Agent> agents=new ArrayList<>();
     @OneToMany(mappedBy = "agence" ,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Service> services=new ArrayList<>();
+    private List<Services> services=new ArrayList<>();
     @OneToOne
     private Compte compte;
     @OneToOne
