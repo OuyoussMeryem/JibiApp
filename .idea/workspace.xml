@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="0e5504b1-c084-4a96-ba48-e5831163561f" name="Changes" comment="implementation TransferController using cmiservice ,compteRepo, paiment">
+      <change afterPath="$PROJECT_DIR$/backend/jibi-app/src/main/java/com/example/jibiapp/controllers/TransactController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/jibi-app/src/main/java/com/example/jibiapp/request/DepositRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/jibi-app/src/main/java/com/example/jibiapp/request/TransferRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/jibi-app/src/main/java/com/example/jibiapp/services/ServiceServices.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/jibi-app/src/main/java/com/example/jibiapp/JibiAppApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/jibi-app/src/main/java/com/example/jibiapp/JibiAppApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/jibi-app/src/main/java/com/example/jibiapp/enums/TypeCompte.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/jibi-app/src/main/java/com/example/jibiapp/enums/TypeCompte.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/jibi-app/src/main/java/com/example/jibiapp/models/ActionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/jibi-app/src/main/java/com/example/jibiapp/models/ActionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/jibi-app/src/main/java/com/example/jibiapp/models/Agence.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/jibi-app/src/main/java/com/example/jibiapp/models/Agence.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/jibi-app/src/main/java/com/example/jibiapp/models/CMIService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/jibi-app/src/main/java/com/example/jibiapp/models/CMIService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/jibi-app/src/main/java/com/example/jibiapp/models/Compte.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/jibi-app/src/main/java/com/example/jibiapp/models/Compte.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/jibi-app/src/main/java/com/example/jibiapp/models/Paiment.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/jibi-app/src/main/java/com/example/jibiapp/models/Paiment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/jibi-app/src/main/java/com/example/jibiapp/models/Service.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/jibi-app/src/main/java/com/example/jibiapp/models/Services.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/jibi-app/src/main/java/com/example/jibiapp/models/Transaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/jibi-app/src/main/java/com/example/jibiapp/models/Transaction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/jibi-app/src/main/java/com/example/jibiapp/repositories/CompteRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/jibi-app/src/main/java/com/example/jibiapp/repositories/CompteRepo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/jibi-app/src/main/java/com/example/jibiapp/repositories/ServiceRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/jibi-app/src/main/java/com/example/jibiapp/repositories/ServiceRepo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/jibi-app/src/main/java/com/example/jibiapp/services/ServiceActionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/jibi-app/src/main/java/com/example/jibiapp/services/ServiceActionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/jibi-app/src/main/java/com/example/jibiapp/services/ServiceCMIService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/jibi-app/src/main/java/com/example/jibiapp/services/ServiceCMIService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/jibi-app/src/main/java/com/example/jibiapp/services/ServiceCompte.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/jibi-app/src/main/java/com/example/jibiapp/services/ServiceCompte.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/jibi-app/src/main/java/com/example/jibiapp/services/ServicePaiment.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/jibi-app/src/main/java/com/example/jibiapp/services/ServicePaiment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/jibi-app/src/main/java/com/example/jibiapp/services/ServiceService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/jibi-app/src/main/java/com/example/jibiapp/services/ServiceTransaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/jibi-app/src/main/java/com/example/jibiapp/services/ServiceTransaction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/jibi-app/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/jibi-app/src/main/resources/application.properties" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 6
+}]]></component>
+  <component name="ProjectId" id="2h6eyTReJiP22JyeTLTAn87STFu" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "TransferController",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="JibiAppApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="jibi-app" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.jibiapp.JibiAppApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0e5504b1-c084-4a96-ba48-e5831163561f" name="Changes" comment="" />
+      <created>1716919210410</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1716919210410</updated>
+      <workItem from="1716919213653" duration="17198000" />
+    </task>
+    <task id="LOCAL-00001" summary="implementation TransferController using cmiservice ,compteRepo, paiment">
+      <option name="closed" value="true" />
+      <created>1716949862066</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1716949862067</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="implementation TransferController using cmiservice ,compteRepo, paiment" />
+    <option name="LAST_COMMIT_MESSAGE" value="implementation TransferController using cmiservice ,compteRepo, paiment" />
+  </component>
+</project>
