@@ -1,0 +1,268 @@
+
+
+  /* Style pour le Footer */
+  .footer {
+    background-color: #d3d0d0;
+    padding: 10px 0;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    
+  }
+  
+  .footer p {
+    font-size: 0.9rem;
+  }
+  
+  .footer a {
+    color: #07c5ff;
+  }
+  
+  .footer a:hover {
+    text-decoration: underline;
+  }
+  
+
+.welcome-section {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  .welcome-section h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    margin-top: 8px;
+  }
+  
+  .welcome-section p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+  }
+  
+  .welcome-section .btn {
+    margin-right: 10px;
+  }
+  
+  /* Style pour la Vue d'Ensemble des Agences */
+  .agencies-section {
+    margin-bottom: 40px;
+  }
+  
+  .agencies-section h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .agency-card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .agency-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .agency-card p {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+  }
+  
+  .agency-card a {
+    color: #07c5ff;
+  }
+  
+  .agency-card a:hover {
+    text-decoration: underline;
+  }
+  
+  @import url(https://fonts.googleapis.com/css?family=Roboto:400,100,900);
+
+
+html,
+body {
+  -moz-box-sizing: border-box;
+       box-sizing: border-box;
+  height: 100%;
+  width: 100%; 
+  background: #FFF;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+}
+ 
+.wrapper {
+  display: table;
+  height: 100%;
+  width: 100%;
+}
+
+.container-fostrap {
+  display: table-cell;
+  padding: 1em;
+  text-align: center;
+  vertical-align: middle;
+}
+.fostrap-logo {
+  width: 100px;
+  margin-bottom:15px
+}
+h1.heading {
+  color: #fff;
+  font-size: 1.15em;
+  font-weight: 900;
+  margin: 0 0 0.5em;
+  color: #505050;
+}
+@media (min-width: 450px) {
+  h1.heading {
+    font-size: 3.55em;
+  }
+}
+@media (min-width: 760px) {
+  h1.heading {
+    font-size: 3.05em;
+  }
+}
+@media (min-width: 900px) {
+  h1.heading {
+    font-size: 3.25em;
+    margin: 0 0 0.3em;
+  }
+} 
+.card {
+  display: block; 
+    margin-bottom: 20px;
+    line-height: 1.42857143;
+    background-color: #fff;
+    border-radius: 2px;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12); 
+    transition: box-shadow .25s; 
+}
+.card:hover {
+  box-shadow: 0 8px 17px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+}
+.img-card {
+  width: 100%;
+  height:200px;
+  border-top-left-radius:2px;
+  border-top-right-radius:2px;
+  display:block;
+    overflow: hidden;
+}
+.img-card img{
+  width: 100%;
+  height: 200px;
+  object-fit:cover; 
+  transition: all .25s ease;
+} 
+.card-content {
+  padding:15px;
+  text-align:left;
+}
+.card-title {
+  margin-top:0px;
+  font-weight: 700;
+  font-size: 1.65em;
+}
+.card-title a {
+  color: #000;
+  text-decoration: none !important;
+}
+.card-read-more {
+  border-top: 1px solid #D4D4D4;
+}
+.card-read-more a {
+  text-decoration: none !important;
+  padding:10px;
+  font-weight:600;
+  text-transform: uppercase
+}
+
+.wrapper{
+    margin-top: 5%;
+}
+
+
+
+
+
+
+
+
+
+:host {
+  display: block;
+  height: 100vh;
+  width: 100%;
+  overflow: auto;
+}
+
+.fade {
+  transition: opacity 0.5s ease-in-out;
+  opacity: 0;
+}
+
+:host:not(.fade) {
+  transition: opacity 0.5s ease-in-out;
+  opacity: 1;
+}
+.content {
+  display: flex;
+  max-width: 1200px; /* Adjust as needed */
+  width: 100%;
+  margin: 0 auto; /* Center the content */
+  padding: 20px;
+}
+
+.left, .right {
+  flex: 1;
+  padding: 20px;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.left h2 {
+  color: #333; /* Dark gray */
+  font-size: 2em;
+  font-family: 'Monteserrat', 'sans-serif'; /* Change to your desired font */
+  font-weight: bold; /* Make the text bold */
+  margin-bottom: 10px;
+}
+
+.left p {
+  color: #666; /* Medium gray */
+  font-size: 1em;
+  font-family: 'Monteserrat', 'sans-serif'; /* Change to your desired font */
+  margin-bottom: 20px;
+}
+
+.left ul li {
+  color: #666; /* Medium gray */
+  font-size: 1em;
+  font-family: 'Monteserrat', 'sans-serif'; /* Change to your desired font */
+  margin-bottom: 10px;
+}
+.get-started {
+  background-color: #ff0000; /* Change to your desired color */
+  color: white;
+  border: none;
+  padding: 5px 10px; /* Smaller padding */
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px; /* Smaller font size */
+  margin: 20px 0;
+  cursor: pointer;
+}
+
+.right img {
+  width: 100%;
+  height: auto;
+}

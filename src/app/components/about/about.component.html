@@ -1,0 +1,58 @@
+<!-- Dans le fichier app.component.html -->
+
+<div class="container">
+    <!-- Section de Bienvenue -->
+  
+  
+
+    <section class="main-section">
+        <div class="content">
+            <div class="left">
+                <h2>Payments made easy!</h2>
+                <p>Manage and pay all your bills from one secure, reliable platform. No more juggling multiple apps or websites.</p>
+                <ul>
+                  <li>Consolidate all your bills in one place</li>
+                  <li>Reliable and timely payments</li>
+                </ul>
+                <button mat-raised-button color="accent" routerLink="create-account">GET STARTED</button>
+    
+              </div>
+          <div class="right">
+            <img src="../../../../assets/images/image.jpg" alt="Description of image">
+          </div>
+        </div>
+      </section>
+
+    <!-- Vue d'Ensemble des Agences -->
+    <section class="agencies-section">
+        
+        <div class="agencies-list row">
+            <!-- Utiliser ngFor pour afficher chaque agence dans une colonne -->
+            <div class="col-xs-12 col-sm-4" *ngFor="let agency of agencies">
+                <div class="agency-card card rounded">
+                    <a class="img-card">
+                        <img [src]="agency.imageUrl" alt="Agency Image" />
+                    </a>
+                    <div class="card-content">
+                        <h4 class="card-title">
+                            <a>{{ agency.name }}</a>
+                        </h4>
+                        <ul>
+                            <li>Factures eau</li>
+                            <li>Factures électricité</li>
+                        </ul>
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+                    </section>
+                    
+                    
+  
+  
+  </div>
+  <!-- <footer class="footer">
+    <div class="container">
+      <p>© 2024 Tous droits réservés. | <a href="/contact">Nous contacter</a> | <a href="/mentions-legales">Mentions légales</a></p>
+    </div>
+  </footer> -->

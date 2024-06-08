@@ -1,0 +1,62 @@
+<div class="container mt-5">
+    <h2>Liste des agents</h2>
+    <button  mat-raised-button color="accent" class=" mb-3 bt" (click)="goBack()">Retour</button>
+    <table mat-table [dataSource]="agents" class="mat-elevation-z8">
+      <ng-container matColumnDef="lastName">
+        <th mat-header-cell *matHeaderCellDef>Nom</th>
+        <td mat-cell *matCellDef="let agent">{{ agent.lastName }}</td>
+      </ng-container>
+      <ng-container matColumnDef="firstName">
+        <th mat-header-cell *matHeaderCellDef>Prénom</th>
+        <td mat-cell *matCellDef="let agent">{{ agent.firstName }}</td>
+      </ng-container>
+      <ng-container matColumnDef="idType">
+        <th mat-header-cell *matHeaderCellDef>Pièce d'identité</th>
+        <td mat-cell *matCellDef="let agent">{{ agent.idType }}</td>
+      </ng-container>
+      <ng-container matColumnDef="idNumber">
+        <th mat-header-cell *matHeaderCellDef>N° pièce d'identité</th>
+        <td mat-cell *matCellDef="let agent">{{ agent.idNumber }}</td>
+      </ng-container>
+      <ng-container matColumnDef="birthDate">
+        <th mat-header-cell *matHeaderCellDef>Date de naissance</th>
+        <td mat-cell *matCellDef="let agent">{{ agent.birthDate }}</td>
+      </ng-container>
+      <ng-container matColumnDef="address">
+        <th mat-header-cell *matHeaderCellDef>Adresse</th>
+        <td mat-cell *matCellDef="let agent">{{ agent.address }}</td>
+      </ng-container>
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let agent">{{ agent.email }}</td>
+      </ng-container>
+      <ng-container matColumnDef="phone">
+        <th mat-header-cell *matHeaderCellDef>Téléphone</th>
+        <td mat-cell *matCellDef="let agent">{{ agent.phone }}</td>
+      </ng-container>
+      <ng-container matColumnDef="registrationNumber">
+        <th mat-header-cell *matHeaderCellDef>N° registre de commerce</th>
+        <td mat-cell *matCellDef="let agent">{{ agent.registrationNumber }}</td>
+      </ng-container>
+      <ng-container matColumnDef="patentNumber">
+        <th mat-header-cell *matHeaderCellDef>N° de patente</th>
+        <td mat-cell *matCellDef="let agent">{{ agent.patentNumber }}</td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let agent" class="button-cell">
+            <button mat-icon-button color="primary" (click)="editAgent(agent)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteAgent(agent)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    
+  </div>
+  
