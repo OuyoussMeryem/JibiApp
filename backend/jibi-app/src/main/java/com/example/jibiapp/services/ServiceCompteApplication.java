@@ -16,6 +16,8 @@ public class ServiceCompteApplication {
     private CompteApplicationRepo compteApplicationRepo;
     @Autowired
     private ServiceClient serviceClient;
+    @Autowired
+    private ServiceCMIService serviceCMIService;
 
     public Optional<CompteApplication> findCompteByClientId(Long clientId){
         return compteApplicationRepo.findByClientId(clientId);
@@ -25,11 +27,14 @@ public class ServiceCompteApplication {
         compteApplicationRepo.save(compteApplication);
     }
 
-    public CompteApplication ouvrirCompteApplication(Long clientId, String nomCompte, TypeCompte typeCompte) {
+    public CompteApplication ouvrirCompteApplication(Long clientId, TypeCompte typeCompte, String nom, String prenom, String telephone, String email) {
         Client client = serviceClient.findClientById(clientId).orElseThrow(() -> new RuntimeException("Client not found"));
 
+        boolean infoValide = serviceCMIService.verifierInformationsClient(client, nom, prenom, telephone, email);
+        if (!infoValide) {
+            throw new RuntimeException("Les informations du client ne correspondent pas");
+        }
         CompteApplication compteApplication = new CompteApplication();
-        compteApplication.setNom(nomCompte);
         compteApplication.setSolde(0.0);
         compteApplication.setType_compte(typeCompte);
         compteApplication.setClient(client);

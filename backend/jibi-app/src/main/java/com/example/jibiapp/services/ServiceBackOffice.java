@@ -97,6 +97,7 @@ public class ServiceBackOffice {
     public Agence createAgence(CreateAgenceRequest request) {
         Agence agence = new Agence();
         agence.setNom(request.getNom());
+        agence.setDescription(request.getDescription());
 
 
         try {

@@ -21,6 +21,12 @@ public class AgentController {
     private ServiceAgent serviceAgent;
 
 
+
+    @GetMapping("/test")
+    public String test() {
+        return "hi from Agent";
+    }
+
     @PostMapping("/{agentId}/createClient")
     public ResponseEntity<AuthenticationResponse> createClient(
             @PathVariable Long agentId,

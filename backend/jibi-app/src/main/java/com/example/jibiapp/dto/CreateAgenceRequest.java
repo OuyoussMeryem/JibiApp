@@ -7,5 +7,6 @@ import org.springframework.web.multipart.MultipartFile;
 @Getter
 public class CreateAgenceRequest {
     private String nom;
+    private String description;
     private MultipartFile pieceIdentiteFaceOne;
 }

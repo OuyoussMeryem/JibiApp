@@ -21,7 +21,6 @@ public class CompteApplication {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nom;
     private Double solde;
     @Enumerated(EnumType.STRING)
     private TypeCompte type_compte;

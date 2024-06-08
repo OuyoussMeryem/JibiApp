@@ -6,7 +6,6 @@ import com.example.jibiapp.models.CompteApplication;
 import com.example.jibiapp.services.ServiceClient;
 import com.example.jibiapp.services.ServiceCompteApplication;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,7 +22,7 @@ public class ClientController {
 
     @GetMapping("/test")
     public String test() {
-        return "test test";
+        return "hi from client";
     }
 
     @PostMapping("/demandeInscription/{email}")
@@ -74,10 +73,13 @@ public class ClientController {
     @PostMapping("/{clientId}/ouvrir-compte-application")
     public ResponseEntity<CompteApplication> ouvrirCompteApplication(
             @PathVariable Long clientId,
-            @RequestParam String nomCompte,
-            @RequestParam TypeCompte typeCompte) {
+            @RequestParam TypeCompte typeCompte,
+            @RequestParam String nom,
+            @RequestParam String prenom,
+            @RequestParam String telephone,
+            @RequestParam String email) {
 
-        CompteApplication compteApplication = serviceCompteApplication.ouvrirCompteApplication(clientId, nomCompte, typeCompte);
+        CompteApplication compteApplication = serviceCompteApplication.ouvrirCompteApplication(clientId, typeCompte,nom,prenom,telephone,email);
         return ResponseEntity.ok(compteApplication);
     }
 

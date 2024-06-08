@@ -68,13 +68,20 @@ public class AdminController {
         return ResponseEntity.ok(serviceBackOffice.createAgent(backOffice,request));
     }
 
+    @GetMapping("/test")
+    public String test() {
+        return "hi from Admin";
+    }
+
     @PostMapping("/createAgence")
     public ResponseEntity<Agence> createAgence(
             @RequestParam String nom,
+            @RequestParam String description,
             @RequestParam MultipartFile image) {
 
         CreateAgenceRequest request =new CreateAgenceRequest();
         request.setNom(nom);
+        request.setDescription(description);
         request.setPieceIdentiteFaceOne(image);
         Agence agence=serviceBackOffice.createAgence(request);
         return new ResponseEntity<>(agence, HttpStatus.CREATED);

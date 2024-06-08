@@ -27,27 +27,15 @@ public class SecurityConfig {
     @Autowired
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-
-/*@Bean
-public SecurityFilterChain securityFilterChain(HttpSecurity http)throws Exception{
-    return http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(
-                    req-> req.requestMatchers("/api/auth/**").permitAll()
-                            .requestMatchers("/api/client/**").hasAnyAuthority("CLIENT")
-                            .requestMatchers("/api/depot/**").hasAnyAuthority("CLIENT")
-                            .requestMatchers("/api/agent/**").hasAnyAuthority("AGENT")
-                            .requestMatchers("/api/BackOffice/**").hasAnyAuthority("ADMIN")
-                            .anyRequest().authenticated()
-               ).userDetailsService(userDetailsImpl)
-            .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class).build();
-
-
-}*/
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http)throws Exception{
         return http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(
-                        req-> req.requestMatchers("/api/auth/login/**","/api/BackOffice/**").permitAll()
+                        req-> req.requestMatchers("/api/auth/login/**","/api/BackOffice/agences","/api/client/demandeInscription/**").permitAll()
+                                .requestMatchers("/api/client/**").hasAnyAuthority("CLIENT")
                                 .requestMatchers("/api/agent/**").hasAnyAuthority("AGENT")
+                                .requestMatchers("/api/depot/**").hasAnyAuthority("CLIENT")
+                                .requestMatchers("/api/BackOffice/**").hasAnyAuthority("ADMIN")
+                                .anyRequest().authenticated()
                 ).userDetailsService(userDetailsImpl)
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class).build();
@@ -63,6 +51,5 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http)throws Exceptio
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
-
 
 }
