@@ -23,7 +23,7 @@ public class Transaction {
     private StatusTransaction statut;
     private Date date;
     @ManyToOne
-    private Compte compte; // Compte associé à la transaction
+    private CompteApplication compte; // Compte associé à la transaction
     @OneToOne
     private ActionService actionService; // Facture associée à la transaction
     @OneToOne

@@ -1,9 +1,7 @@
 package com.example.jibiapp.services;
 
 import com.example.jibiapp.dto.DemandeIscriptionRequest;
-import com.example.jibiapp.models.Agent;
-import com.example.jibiapp.models.Client;
-import com.example.jibiapp.models.Image;
+import com.example.jibiapp.models.*;
 import com.example.jibiapp.repositories.ClientRepo;
 import com.example.jibiapp.repositories.ImageRepo;
 import com.example.jibiapp.services.image.CloudinaryService;
@@ -20,6 +18,7 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -38,10 +37,12 @@ public class ServiceClient {
     private ClientRepo clientRepo;
     @Autowired
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    @Autowired
+    private ServiceAgence serviceAgence;
 
 
     public void demandeInscription(DemandeIscriptionRequest client, String email) {
-        Agent agent = serviceAgent.findByAdresseEmail(email);
+        Agent agent = serviceAgent.findByAdresseEmail(email).get();
         if (agent != null) {
             try {
                 Image imageFaceOne = uploadImage(client.getPieceIdentiteFaceOne());
@@ -100,16 +101,40 @@ public class ServiceClient {
     public Client save(Client client){
         return clientRepo.save(client);
     }
-    public Client modifierUsernameAndPassword(Long clientId,String nouveauUsername,String nouveauPassword){
-        Optional<Client> optionalClient=findClientById(clientId);
-        if(optionalClient.isPresent()){
-            Client client=optionalClient.get();
-            client.setUsername(nouveauUsername);
-            client.setPassword(passwordEncoder.encode(nouveauPassword));
-            return save(client);
 
-        }else {
-            throw new RuntimeException("Client introuvable avec l'ID : " + clientId);
+    public Client modifierUsernameAndPasswordForAgence(Long clientId, String nouveauUsername, String nouveauPassword) {
+        Optional<Client> optionalClient = findClientById(clientId);
+
+        if (optionalClient.isPresent()) {
+            Client client = optionalClient.get();
+
+
+            if (isUsernameUniqueForAgence(nouveauUsername)) {
+                client.setUsername(nouveauUsername);
+                client.setPassword(passwordEncoder.encode(nouveauPassword));
+                save(client);
+                return client;
+            } else {
+                throw new RuntimeException("Le nouveau nom d'utilisateur doit être unique parmi les clients de l'agence.");
+            }
+        } else {
+            throw new RuntimeException("Client ou agence introuvable avec l'ID : " + clientId);
         }
+    }
+    public Optional<Client> findByAdresseEmail(String email){
+        return clientRepo.findByEmail(email);
+    }
+    private boolean isUsernameUniqueForAgence(String username) {
+        return !clientRepo.existsByUsername(username);
+    }
+
+
+    public void delete(Client client) {
+        clientRepo.delete(client);
+    }
+
+
+    public List<Client> findAllClients() {
+        return clientRepo.findAll();
     }
 }

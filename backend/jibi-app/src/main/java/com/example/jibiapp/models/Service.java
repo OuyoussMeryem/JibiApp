@@ -2,6 +2,7 @@ package com.example.jibiapp.models;
 
 import com.example.jibiapp.enums.StatusTransaction;
 import com.example.jibiapp.enums.serviceType;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,6 +29,7 @@ public class Service {
     @ManyToOne
     private Agence agence;
     @OneToMany(mappedBy = "service", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<ActionService> actionService=new ArrayList<>();
     @OneToMany(mappedBy = "service", cascade = CascadeType.ALL)
     private List<Paiment> paiment=new ArrayList<>();

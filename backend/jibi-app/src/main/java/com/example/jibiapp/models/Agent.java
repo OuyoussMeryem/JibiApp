@@ -2,13 +2,15 @@ package com.example.jibiapp.models;
 
 
 import com.example.jibiapp.enums.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -24,17 +26,17 @@ public class Agent extends UserApp{
     private String dateNaissance;
     private String adresse;
     private String numPattente;
-    @Enumerated(EnumType.STRING)
-    private Role role;
+
     @OneToMany(mappedBy = "agent",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonManagedReference
     private List<Client> clients=new ArrayList<>();
     @ManyToOne
+    @JsonIgnore
     private Agence agence;
 
-
-    public Agent(){
+    public Agent() {
         super();
-        this.role=Role.AGENT;
+        this.setRole(Role.AGENT);
     }
 
 }

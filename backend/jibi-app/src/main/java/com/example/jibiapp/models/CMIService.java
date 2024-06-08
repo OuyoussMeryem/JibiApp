@@ -1,5 +1,6 @@
 package com.example.jibiapp.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 
 import jakarta.persistence.*;
@@ -22,6 +23,7 @@ public class CMIService {
     private Long Id;
     private String nom;
     @OneToMany
+    @JsonManagedReference
     private List<Transaction> transactions= new ArrayList<>();
 
     public boolean initierTransaction(Paiment paiment){

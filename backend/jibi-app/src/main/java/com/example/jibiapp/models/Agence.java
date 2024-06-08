@@ -1,5 +1,6 @@
 package com.example.jibiapp.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,14 +21,14 @@ public class Agence {
     private Long id;
     private String nom;
     @OneToMany(mappedBy = "agence" ,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonManagedReference
     private List<Agent> agents=new ArrayList<>();
     @OneToMany(mappedBy = "agence" ,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonManagedReference
     private List<Service> services=new ArrayList<>();
-    @OneToOne
-    private Compte compte;
+    @OneToOne(mappedBy = "agence")
+    private CompteApplication compteApplication;
     @OneToOne
     private Image image;
-    @OneToMany(mappedBy = "agence", cascade = CascadeType.ALL)
-    private List<ClientAgence> clientAgences = new ArrayList<>();
-    
+
 }

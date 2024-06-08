@@ -27,27 +27,33 @@ public class SecurityConfig {
     @Autowired
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-/*    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http)throws Exception{
-        return http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(
-                        req->req.requestMatchers("/login/**","/register/**","/api/cloudinary/**","/api/BackOffice/**").permitAll()
-                               .anyRequest().authenticated()
-                ).userDetailsService(userDetailsImpl)
-                .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class).build();
 
-
-    }*/
-@Bean
+/*@Bean
 public SecurityFilterChain securityFilterChain(HttpSecurity http)throws Exception{
     return http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(
-                    req->req.anyRequest().permitAll()
+                    req-> req.requestMatchers("/api/auth/**").permitAll()
+                            .requestMatchers("/api/client/**").hasAnyAuthority("CLIENT")
+                            .requestMatchers("/api/depot/**").hasAnyAuthority("CLIENT")
+                            .requestMatchers("/api/agent/**").hasAnyAuthority("AGENT")
+                            .requestMatchers("/api/BackOffice/**").hasAnyAuthority("ADMIN")
+                            .anyRequest().authenticated()
                ).userDetailsService(userDetailsImpl)
             .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class).build();
 
 
-}
+}*/
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http)throws Exception{
+        return http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(
+                        req-> req.requestMatchers("/api/auth/login/**","/api/BackOffice/**").permitAll()
+                                .requestMatchers("/api/agent/**").hasAnyAuthority("AGENT")
+                ).userDetailsService(userDetailsImpl)
+                .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class).build();
+
+
+    }
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();

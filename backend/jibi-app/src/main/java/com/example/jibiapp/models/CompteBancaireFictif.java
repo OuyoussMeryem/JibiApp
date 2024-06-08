@@ -1,6 +1,7 @@
 package com.example.jibiapp.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,19 +10,17 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ClientAgence {
+@AllArgsConstructor
+public class CompteBancaireFictif{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @OneToOne
     private Client client;
 
-    @ManyToOne
-    private Agence agence;
+    @OneToOne
+    private CarteBancaire carteBancaire;
 
-    public ClientAgence(Client client, Agence agence) {
-        this.client = client;
-        this.agence = agence;
-    }
+    private Double solde;
 }

@@ -1,8 +1,13 @@
 package com.example.jibiapp.controllers;
 
 import com.example.jibiapp.dto.DemandeIscriptionRequest;
+import com.example.jibiapp.enums.TypeCompte;
+import com.example.jibiapp.models.CompteApplication;
 import com.example.jibiapp.services.ServiceClient;
+import com.example.jibiapp.services.ServiceCompteApplication;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,6 +18,8 @@ public class ClientController {
 
     @Autowired
     private ServiceClient serviceClient;
+    @Autowired
+    private ServiceCompteApplication serviceCompteApplication;
 
     @GetMapping("/test")
     public String test() {
@@ -47,16 +54,31 @@ public class ClientController {
         return "La demande a été envoyée avec succès";
     }
 
-    @PutMapping("/modifierUsernamePassword/{clientId}")
+    @PutMapping("/{clientId}/modifierUsernamePassword")
     public String  modifierUsernamePassword(@PathVariable Long clientId,
                                             @RequestParam String nouveauUsername,
                                             @RequestParam String nouveauPassword){
         try {
-            serviceClient.modifierUsernameAndPassword(clientId,nouveauUsername,nouveauPassword);
+            serviceClient.modifierUsernameAndPasswordForAgence(clientId,nouveauUsername,nouveauPassword);
             return "Identifiants mis à jour avec succès.";
 
         }catch (Exception e){
             return "Erreur lors de la mise à jour des identifiants : " + e.getMessage();
         }
     }
+
+
+
+
+
+    @PostMapping("/{clientId}/ouvrir-compte-application")
+    public ResponseEntity<CompteApplication> ouvrirCompteApplication(
+            @PathVariable Long clientId,
+            @RequestParam String nomCompte,
+            @RequestParam TypeCompte typeCompte) {
+
+        CompteApplication compteApplication = serviceCompteApplication.ouvrirCompteApplication(clientId, nomCompte, typeCompte);
+        return ResponseEntity.ok(compteApplication);
+    }
+
 }

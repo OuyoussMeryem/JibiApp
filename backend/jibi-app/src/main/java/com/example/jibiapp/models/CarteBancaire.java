@@ -22,7 +22,9 @@ public class CarteBancaire {
     private LocalDate dateExpiration;
     private String codeCvv;
     private String typeCarte;
-    @OneToOne
-    private Compte compte;
+    @OneToOne(mappedBy = "carteBancaire")
+    private CompteBancaireFictif compteBancaireFictif;
+
+
 
 }

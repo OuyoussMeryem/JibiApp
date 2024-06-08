@@ -1,5 +1,6 @@
 package com.example.jibiapp.models;
 
+import com.example.jibiapp.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,11 +29,13 @@ public class UserApp implements UserDetails {
     private String email;
     private String telephone;
     private String password;
-    private boolean firstAuth;
+    private boolean firstAuth=true;
+    @Enumerated(value=EnumType.STRING)
+    private Role role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("USER"));
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
     @Override

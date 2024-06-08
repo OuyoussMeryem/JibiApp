@@ -2,6 +2,7 @@ package com.example.jibiapp.models;
 
 
 import com.example.jibiapp.enums.Role;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,22 +24,24 @@ public class Client extends UserApp{
     private String numPieceIdentite;
     private String dateNaissance;
     private String adresse;
-    @OneToOne
-    private Compte compte;
+    @OneToOne(mappedBy = "client")
+    private CompteApplication compteApplication;
+    @OneToOne(mappedBy = "client")
+    private CompteBancaireFictif compteBancaireFictif;
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Paiment> paiments=new ArrayList<>();
     @ManyToOne
     private Agent agent;
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<ActionService>  actionService= new ArrayList<>();
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
-    private List<ClientAgence> clientAgences = new ArrayList<>();
-    @Enumerated(EnumType.STRING)
-    private Role role;
 
-    public Client(){
+
+    public Client() {
         super();
-        this.role= Role.CLIENT;
+        this.setRole(Role.CLIENT);
     }
+
 
 }
