@@ -1,7 +1,7 @@
 package com.example.jibiapp.services;
 
 import com.example.jibiapp.models.Services;
-import com.example.jibiapp.repositories.ServiceRepo;
+import com.example.jibiapp.repositories.ServicesRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +11,7 @@ import java.util.List;
 public class ServiceServices {
 
     @Autowired
-    private ServiceRepo serviceRepo;
+    private ServicesRepo serviceRepo;
 
     public List<Services> getAllServices() {
         return serviceRepo.findAll();

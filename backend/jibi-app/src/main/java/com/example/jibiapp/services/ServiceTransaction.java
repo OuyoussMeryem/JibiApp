@@ -1,106 +1,237 @@
 package com.example.jibiapp.services;
 
+import com.example.jibiapp.enums.EtatActionService;
 import com.example.jibiapp.models.*;
-import com.example.jibiapp.repositories.ActionServiceRepo;
-import com.example.jibiapp.repositories.CMIServiceRepo;
-import com.example.jibiapp.repositories.TransactionRepo;
+import com.example.jibiapp.repositories.*;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
+/*
 @AllArgsConstructor
+*/
 public class ServiceTransaction {
 
-    private TransactionRepo transactionRepository;
+    private TransactionRepo transactionRepo;
 
-    private CMIServiceRepo cmiServiceRepository; // Assuming you have a repository for CMIService
+    private CMIServiceRepo cmiServiceRepo; // Assuming you have a repository for CMIService
 
     @Autowired
-    public ServiceTransaction(CMIServiceRepo cmiServiceRepo, TransactionRepo transactionRepository) {
-        this.cmiServiceRepository = cmiServiceRepo;
-        this.transactionRepository = transactionRepository;
+    private PaimentRepo paimentRepo;
+
+    @Autowired
+    private CompteRepo compteRepo;
+
+    @Autowired
+    private ActionServiceRepo actionServiceRepo;
+
+    @Autowired
+    private ServicesRepo servicesRepo;
+
+    private static final Logger logger = LoggerFactory.getLogger(ServiceTransaction.class);
+
+
+
+    @Autowired
+    public ServiceTransaction(TransactionRepo transactionRepo, CMIServiceRepo cmiServiceRepo, PaimentRepo paimentRepo, CompteRepo compteRepo, ActionServiceRepo actionServiceRepo, ServicesRepo servicesRepo) {
+        this.transactionRepo = transactionRepo;
+        this.cmiServiceRepo = cmiServiceRepo;
+        this.paimentRepo = paimentRepo;
+        this.compteRepo = compteRepo;
+        this.actionServiceRepo = actionServiceRepo;
+        this.servicesRepo = servicesRepo;
     }
 
+
     public List<Transaction> getAllTransactions() {
-        return transactionRepository.findAll();
+        return transactionRepo.findAll();
     }
 
     @Transactional
-    public void makePayment(Compte compte, ActionService actionService, Paiment paiment, CMIService cmiService) {
+    public Transaction saveTransaction(Transaction transaction) {
+        logger.info("Saving transaction: {}", transaction);
+        return transactionRepo.save(transaction);
+    }
+
+
+
+    /*@Transactional
+    public Transaction createAndSaveTransaction(Long transferFrom, Long transferTo, Double transferAmount, Long cmiServiceId) {
         try {
-            // Log the start of the payment process
-            System.out.println("Starting payment process...");
-            System.out.println("Compte: " + compte);
-            System.out.println("ActionService: " + actionService);
-            System.out.println("Paiment: " + paiment);
-            System.out.println("CMIService: " + cmiService);
+            // Initialize transaction
+            Optional<CMIService> optionalCMIService = cmiServiceRepo.findById(cmiServiceId);
+            CMIService cmiService = optionalCMIService.get();
 
-            // Check if the account has sufficient balance
-            if (!compte.hasSufficientBalance(paiment.getMontant())) {
-                System.out.println("Insufficient balance in the account");
-                throw new IllegalArgumentException("Insufficient balance in the account");
-            }
-
-            // Perform additional processing or validation with CMIService
-            if (cmiService != null) {
-                System.out.println("Validating transaction with CMIService...");
-                boolean isValid = cmiService.validerTransaction(paiment);
-                if (!isValid) {
-                    System.out.println("Payment validation failed by CMIService");
-                    throw new IllegalArgumentException("Payment validation failed by CMIService");
-                }
-            }
-
-            // Create a new transaction
             Transaction transaction = new Transaction();
-            transaction.setMontant(paiment.getMontant());
-            transaction.setDate(new Date());
-            transaction.setCompte(compte);
-            transaction.setActionService(actionService);
-            transaction.setPaiment(paiment);
-            transaction.setCmiService(cmiService); // Set the associated CMIService
-            transaction.mettreEnAttente(); // Set transaction status to "En Attente"
-            System.out.println("Transaction created and set to 'En Attente' status");
 
-            // Update the associated action service status
-            actionService.payer(); // Set action service status to "Payée"
-            System.out.println("ActionService status set to 'Payée'");
+            Paiment paiment = new Paiment();
+            paiment.setMontant(transferAmount);
 
-            // Update the transaction status
-            transaction.valider(); // Set transaction status to "Validée"
-            System.out.println("Transaction status updated to 'Validée'");
+            boolean isTransactionInitialized = cmiService.initierTransaction(paiment);
 
-            // Debit the account balance
-            if (!compte.debitAccount(paiment.getMontant())) {
-                System.out.println("Failed to debit account");
-                throw new IllegalStateException("Failed to debit account");
+            if (isTransactionInitialized) {
+                // Create a single transaction representing both credit and debit operations
+                transaction.setDate(new Date());
+                transaction.setCmiService(cmiService);
+
+                // Save the transaction first
+                transaction = transactionRepo.save(transaction);
+
+                // Create and save Paiment entity
+
+                paiment.setTransaction(transaction); // Set the saved transaction
+                paiment = paimentRepo.save(paiment);
+
+                // Retrieve source and destination accounts
+                Optional<Compte> optionalTransferFromCompte = compteRepo.findById(transferFrom);
+                Optional<Compte> optionalTransferToCompte = compteRepo.findById(transferTo);
+                Compte transferFromCompte = optionalTransferFromCompte.get();
+                Compte transferToCompte = optionalTransferToCompte.get();
+
+                // Check if the source and destination accounts are the same
+                if (transferFrom.equals(transferTo)) {
+                    throw new RuntimeException("Source and destination accounts cannot be the same");
+                }
+
+                // Check if the source account has sufficient balance
+                if (transferFromCompte.getSolde() < transferAmount) {
+                    throw new RuntimeException("Insufficient balance in source account");
+                }
+
+                // Debit the amount from the source account
+                transferFromCompte.setSolde(transferFromCompte.getSolde() - transferAmount);
+                compteRepo.save(transferFromCompte);
+
+                // Credit the amount to the destination account
+                transferToCompte.setSolde(transferToCompte.getSolde() + transferAmount);
+                compteRepo.save(transferToCompte);
+
+                // Set attributes for the transaction
+                transaction.setMontant(transferAmount);
+                transaction.mettreEnAttente();
+                transaction.setCompte(transferFromCompte);
+
+                // Save the single transaction representing both operations
+                transaction = transactionRepo.save(transaction);
+
+                // Confirm and save the transaction
+                transaction.valider();
+                transaction = transactionRepo.save(transaction);
+
+                return transaction;
+            } else {
+                throw new RuntimeException("Failed to initialize transaction. Please try again.");
             }
-            System.out.println("Account debited successfully");
-
-            // Add the transaction to the list of transactions associated with the account
-            compte.getTransactions().add(transaction);
-            System.out.println("Transaction added to the account's transaction list");
-
-            // Print transaction details
-            transaction.printDetails();
-            System.out.println("Transaction details printed");
-
-            // Save the transaction to the repository
-            transactionRepository.save(transaction);
-            System.out.println("Transaction saved to the repository");
-
-        } catch (IllegalArgumentException e) {
-            System.out.println("IllegalArgumentException: " + e.getMessage());
-            throw e; // Re-throw the exception to ensure transaction rollback and proper error reporting
         } catch (Exception e) {
-            System.out.println("Exception occurred: " + e.getMessage());
-            throw new RuntimeException("An error occurred during the payment process", e);
+            // Log error and send appropriate response
+            logger.error("Transaction failed: ", e);
+            throw new RuntimeException("Transaction failed. Please try again.");
         }
+    }*/
+
+    @Transactional
+    public Transaction createAndSaveTransaction(Long transferFrom, Long transferTo, Double transferAmount, Long cmiServiceId, Long serviceId, Long actionServiceId) {
+        if (actionServiceId == null) {
+            throw new IllegalArgumentException("ActionService ID must not be null");
+        }
+
+        // Retrieve the existing ActionService
+        Optional<ActionService> optionalActionService = actionServiceRepo.findById(actionServiceId);
+        ActionService actionService = optionalActionService.orElseThrow(() -> new RuntimeException("ActionService not found"));
+
+        // Retrieve the existing CMIService
+        Optional<CMIService> optionalCMIService = cmiServiceRepo.findById(cmiServiceId);
+        CMIService cmiService = optionalCMIService.orElseThrow(() -> new RuntimeException("CMIService not found"));
+
+        // Retrieve the existing Service
+        Optional<Services> optionalServices = servicesRepo.findById(serviceId);
+        Services service = optionalServices.orElseThrow(() -> new RuntimeException("Service not found"));
+
+        // Retrieve source and destination accounts
+        Optional<Compte> optionalTransferFromCompte = compteRepo.findById(transferFrom);
+        Compte transferFromCompte = optionalTransferFromCompte.orElseThrow(() -> new RuntimeException("Transfer from Compte not found"));
+
+        //REtrieve the client associated with the transfer from compte
+        Client client = transferFromCompte.getClient();
+
+        // Ensure transfer amount is sufficient
+        if (transferAmount < actionService.getMontant()) {
+            throw new IllegalArgumentException("Transfer amount is insufficient for the service");
+        }
+
+        // Create a new Transaction entity
+        Transaction transaction = new Transaction();
+        transaction.setDate(new Date());
+        transaction.setMontant(transferAmount);
+        transaction.setActionService(actionService); // Associate ActionService with Transaction
+
+        // Save the transaction
+        transaction = transactionRepo.save(transaction);
+
+        // Perform debit and credit operations
+        performDebitAndCredit(transferFrom, transferTo, transferAmount);
+
+        // Modify ActionService status
+        actionService.payer(); // Assuming this changes the status to "paid"
+        actionServiceRepo.save(actionService); // Save the updated ActionService
+
+        // Set the IDs for Compte and CMIService
+        transaction.setCompte(transferFromCompte);
+        transaction.setCmiService(cmiService);
+
+        // Create and save Paiment entity
+        Paiment paiment = new Paiment();
+        paiment.setDatePaiment(LocalDateTime.now()); // Set the current date
+        paiment.setMontant(transferAmount);
+        paiment.setService(service); // Set the service
+        paiment.setTransaction(transaction); // Set the transaction
+        paiment.setClient(client);
+        paiment = paimentRepo.save(paiment);
+
+        // Set the Paiment ID in the Transaction entity
+        transaction.setPaiment(paiment);
+
+        // Set the status of the transaction
+        transaction.valider(); // Assuming the transaction is valid after creation
+
+        return transaction;
+    }
+
+
+
+    private void performDebitAndCredit(Long transferFrom, Long transferTo, Double transferAmount) {
+        // Retrieve source and destination accounts
+        Optional<Compte> optionalTransferFromCompte = compteRepo.findById(transferFrom);
+        Optional<Compte> optionalTransferToCompte = compteRepo.findById(transferTo);
+        Compte transferFromCompte = optionalTransferFromCompte.get();
+        Compte transferToCompte = optionalTransferToCompte.get();
+
+        // Check if the source and destination accounts are the same
+        if (transferFrom.equals(transferTo)) {
+            throw new RuntimeException("Source and destination accounts cannot be the same");
+        }
+
+        // Check if the source account has sufficient balance
+        if (transferFromCompte.getSolde() < transferAmount) {
+            throw new RuntimeException("Insufficient balance in source account");
+        }
+
+        // Debit the amount from the source account
+        transferFromCompte.setSolde(transferFromCompte.getSolde() - transferAmount);
+        compteRepo.save(transferFromCompte);
+
+        // Credit the amount to the destination account
+        transferToCompte.setSolde(transferToCompte.getSolde() + transferAmount);
+        compteRepo.save(transferToCompte);
     }
 
 }

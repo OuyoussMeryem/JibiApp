@@ -54,24 +54,27 @@ public class Compte {
     private static final double MIN_SOLDE_COMPTE_20000 = 20000.0;
 
     public boolean hasSufficientBalance(Double amount) {
+        double minBalanceRequired = 0.0;
+
         switch (type_compte) {
             case Compte_200:
-                return solde >= MIN_SOLDE_COMPTE_200 + amount;
+                minBalanceRequired = MIN_SOLDE_COMPTE_200;
+                break;
             case Compte_5000:
-                return solde >= MIN_SOLDE_COMPTE_5000 + amount;
+                minBalanceRequired = MIN_SOLDE_COMPTE_5000;
+                break;
             case Compte_20000:
-                return solde >= MIN_SOLDE_COMPTE_20000 + amount;
+                minBalanceRequired = MIN_SOLDE_COMPTE_20000;
+                break;
             default:
-                return false;
+                return false; // Unknown account type, insufficient balance
         }
+
+        return solde >= minBalanceRequired + amount;
     }
-    public boolean debitAccount(Double amount) {
-        if (hasSufficientBalance(amount)) {
+
+    public void debitAccount(Double amount) {
             solde -= amount;
-            return true;
-        } else {
-            return false;
-        }
     }
 
     public void creditAccount(Double amount) {

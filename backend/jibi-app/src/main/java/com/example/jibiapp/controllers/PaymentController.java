@@ -24,7 +24,7 @@ public class PaymentController {
     @Autowired
     private ActionServiceRepo actionServiceRepo; // Autowire ActionServiceRepo
 
-    @PostMapping("/makePayment")
+  /*  @PostMapping("/makePayment")
     public ResponseEntity<String> makePayment(@RequestBody Transaction paymentTransaction) {
         try {
             // Fetch the associated CMIService for the ActionService
@@ -46,7 +46,7 @@ public class PaymentController {
             // Return error response in case of any exception
             return new ResponseEntity<>("Payment failed: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
+    }*/
 
     @GetMapping("/all")
     public ResponseEntity<List<Transaction>> getAllTransactions() {

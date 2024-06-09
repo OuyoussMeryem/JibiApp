@@ -13,4 +13,7 @@ public class TransferRequest {
     private Long transferFrom;
     private Long transferTo;
     private Double transferAmount;
+    private Long cmiServiceId;
+    private Long serviceId;
+    private Long actionServiceId;
 }
