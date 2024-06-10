@@ -7,7 +7,7 @@ import com.example.jibiapp.models.Agence;
 import com.example.jibiapp.models.Agent;
 import com.example.jibiapp.models.BackOffice;
 import com.example.jibiapp.models.Image;
-import com.example.jibiapp.repositories.AgentRepo;
+import com.example.jibiapp.enums.serviceType;
 import com.example.jibiapp.responses.AuthenticationResponse;
 import com.example.jibiapp.services.authService.JwtService;
 import com.example.jibiapp.services.image.CloudinaryService;
@@ -16,15 +16,19 @@ import com.example.jibiapp.utils.RandomUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -46,6 +50,8 @@ public class ServiceBackOffice {
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     @Autowired
     private final JwtService jwtService;
+    @Autowired
+    private final ServiceService serviceService;
 
     public AuthenticationResponse createAgent(BackOffice backOffice, CreateAgentRequest request) {
         String username = RandomUtil.generateRandomUsername();
@@ -174,6 +180,23 @@ public class ServiceBackOffice {
     public List<Agent> getAllAgents() {
         return serviceAgent.findAllAgents();
     }
+
+    public com.example.jibiapp.models.Service addServiceToAgence(Long agenceId, String serviceName, serviceType serviceType, boolean valable) {
+        Agence agence = serviceAgence.findAgenceByid(agenceId)
+                .orElseThrow(() -> new RuntimeException("Agence not found"));
+
+        com.example.jibiapp.models.Service service = new com.example.jibiapp.models.Service();
+        service.setName(serviceName);
+        service.setType(serviceType);
+        service.setValable(valable);
+        service.setAgence(agence);
+
+        agence.getServices().add(service);
+        serviceAgence.save(agence);
+        return serviceService.save(service);
+    }
+
+
 
 
 }

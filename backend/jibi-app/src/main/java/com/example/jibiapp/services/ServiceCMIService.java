@@ -2,6 +2,7 @@ package com.example.jibiapp.services;
 
 import com.example.jibiapp.models.CarteBancaire;
 import com.example.jibiapp.models.Client;
+import com.example.jibiapp.models.Transaction;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,5 +21,20 @@ public class ServiceCMIService {
                 client.getPrenom().equals(prenom) &&
                 client.getTelephone().equals(telephone) &&
                 client.getEmail().equals(email);
+    }
+
+    public boolean initierTransaction(Transaction transaction) {
+
+        return true;
+    }
+
+    public boolean validerTransaction(Transaction transaction) {
+
+        return true;
+    }
+
+    public boolean confirmerTransaction(Transaction transaction) {
+
+        return true;
     }
 }

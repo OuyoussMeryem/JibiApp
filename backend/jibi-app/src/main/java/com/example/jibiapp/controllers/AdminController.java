@@ -2,9 +2,11 @@ package com.example.jibiapp.controllers;
 
 import com.example.jibiapp.dto.CreateAgenceRequest;
 import com.example.jibiapp.dto.CreateAgentRequest;
+import com.example.jibiapp.enums.serviceType;
 import com.example.jibiapp.models.Agence;
 import com.example.jibiapp.models.Agent;
 import com.example.jibiapp.models.BackOffice;
+import com.example.jibiapp.models.Service;
 import com.example.jibiapp.responses.AuthenticationResponse;
 import com.example.jibiapp.services.ServiceAgent;
 import com.example.jibiapp.services.ServiceBackOffice;
@@ -135,5 +137,17 @@ public class AdminController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
+    @PostMapping("{agenceId}/addServiceToAgence")
+    public ResponseEntity<Service> addServiceToAgence(
+            @PathVariable Long agenceId,
+            @RequestParam String serviceName,
+            @RequestParam serviceType serviceType,
+            @RequestParam boolean valable) {
+
+        com.example.jibiapp.models.Service service = serviceBackOffice.addServiceToAgence(agenceId, serviceName, serviceType, valable);
+        return new ResponseEntity<>(service, HttpStatus.CREATED);
+    }
+
+
 
 }

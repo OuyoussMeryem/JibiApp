@@ -5,10 +5,14 @@ import com.example.jibiapp.repositories.UserAppRepo;
 import com.example.jibiapp.responses.AuthenticationResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Service
 @RequiredArgsConstructor
@@ -34,17 +38,19 @@ public class AuthenticationService {
         UserApp user = userRepository.findByUsername(request.getUsername())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
+
         if (user.isFirstAuth()) {
             user.setFirstAuth(false);
             userRepository.save(user);
             String token = jwtService.generateToken(user);
-            return new AuthenticationResponse("redirect", token);
+            return new AuthenticationResponse("redirect", token, user.getRole().name());
         } else {
-
             String token = jwtService.generateToken(user);
-            return new AuthenticationResponse("authenticationSuccessful", token);
+            return new AuthenticationResponse("authenticationSuccessful", token, user.getRole().name());
         }
     }
+
+
 
 
 }

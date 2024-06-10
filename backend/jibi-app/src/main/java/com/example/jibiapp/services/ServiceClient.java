@@ -1,9 +1,10 @@
 package com.example.jibiapp.services;
 
 import com.example.jibiapp.dto.DemandeIscriptionRequest;
+import com.example.jibiapp.enums.EtatActionService;
+import com.example.jibiapp.enums.StatusTransaction;
 import com.example.jibiapp.models.*;
-import com.example.jibiapp.repositories.ClientRepo;
-import com.example.jibiapp.repositories.ImageRepo;
+import com.example.jibiapp.repositories.*;
 import com.example.jibiapp.services.image.CloudinaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -18,6 +19,7 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -26,6 +28,8 @@ import java.util.Optional;
 public class ServiceClient {
     @Autowired
     private JavaMailSender emailSender;
+    @Autowired
+    private TransactionRepo transactionRepo;
     @Autowired
     @Lazy
     private ServiceAgent serviceAgent;
@@ -36,10 +40,15 @@ public class ServiceClient {
     @Autowired
     private ClientRepo clientRepo;
     @Autowired
+    private ActionServiceRepo actionServiceRepo;
+    @Autowired
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     @Autowired
-    private ServiceAgence serviceAgence;
-
+    private ServiceCMIService cmiService;
+    @Autowired
+    private CompteApplicationRepo compteApplicationRepo;
+    @Autowired
+    private EmailService emailService;
 
     public void demandeInscription(DemandeIscriptionRequest client, String email) {
         Agent agent = serviceAgent.findByAdresseEmail(email).get();
@@ -121,6 +130,20 @@ public class ServiceClient {
             throw new RuntimeException("Client ou agence introuvable avec l'ID : " + clientId);
         }
     }
+
+    public Client modifierPassword(Long clientId, String nouveauPassword) {
+        Optional<Client> optionalClient = findClientById(clientId);
+
+        if (optionalClient.isPresent()) {
+                Client client = optionalClient.get();
+                client.setPassword(passwordEncoder.encode(nouveauPassword));
+                save(client);
+                return client;
+        }else {
+            throw new RuntimeException("client introuvable avec l'ID : " + clientId);
+        }
+
+    }
     public Optional<Client> findByAdresseEmail(String email){
         return clientRepo.findByEmail(email);
     }
@@ -136,5 +159,84 @@ public class ServiceClient {
 
     public List<Client> findAllClients() {
         return clientRepo.findAll();
+    }
+
+    public List<ActionService> getNonPayeeActionServicesByClientAndAgence(Long clientId, Long agenceId) {
+        return actionServiceRepo.findByClientIdAndServiceAgenceIdAndEtat(clientId, agenceId, EtatActionService.NONPAYEE);
+    }
+
+
+
+
+    //paiment *********************************************
+    public boolean payActionService(Long clientId, Long actionServiceId) {
+        Optional<ActionService> actionServiceOpt = actionServiceRepo.findById(actionServiceId);
+        if (actionServiceOpt.isEmpty()) {
+            return false;
+        }
+
+        ActionService actionService = actionServiceOpt.get();
+        if (!actionService.getClient().getId().equals(clientId) || actionService.getEtat() != EtatActionService.NONPAYEE) {
+            return false;
+        }
+
+        Client client = actionService.getClient();
+        CompteApplication compte = client.getCompteApplication();
+        if (!compte.hasSufficientBalance(actionService.getMontant())) {
+            return false;
+        }
+
+        Transaction transaction = new Transaction();
+        transaction.setMontant(actionService.getMontant());
+        transaction.setStatut(StatusTransaction.ENATTENTE);
+        transaction.setDate(new java.util.Date());
+        transaction.setCompte(compte);
+        transaction.setActionService(actionService);
+        transactionRepo.save(transaction);
+
+        boolean transactionInitiated = cmiService.initierTransaction(transaction);
+        if (!transactionInitiated) {
+            transaction.échouer();
+            transactionRepo.save(transaction);
+            return false;
+        }
+
+        boolean transactionValidated = cmiService.validerTransaction(transaction);
+        if (!transactionValidated) {
+            transaction.échouer();
+            transactionRepo.save(transaction);
+            return false;
+        }
+
+        boolean transactionConfirmed = cmiService.confirmerTransaction(transaction);
+        if (!transactionConfirmed) {
+            transaction.échouer();
+            transactionRepo.save(transaction);
+            return false;
+        }
+
+        compte.debitAccount(actionService.getMontant());
+        compteApplicationRepo.save(compte);
+
+        actionService.payer();
+        actionService.setDate(LocalDateTime.now());
+        actionServiceRepo.save(actionService);
+
+        transaction.confirmer();
+        transactionRepo.save(transaction);
+
+        emailService.sendPaymentSuccessEmail(client.getEmail(), actionService.getMontant());
+        return true;
+    }
+    public List<ActionService> getPayeeActionServicesByClient(Long clientId) {
+        return actionServiceRepo.findByClientIdAndEtat(clientId, EtatActionService.PAYEE);
+    }
+
+    public boolean VerifierAmountWithActionService(Long actionServiceId, Double amount) {
+        ActionService actionService = actionServiceRepo.findById(actionServiceId).orElse(null);
+        if (actionService == null) {
+            return false;
+        }
+        return actionService.getMontant().equals(amount);
     }
 }

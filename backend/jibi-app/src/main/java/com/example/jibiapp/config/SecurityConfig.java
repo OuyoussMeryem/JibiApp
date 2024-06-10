@@ -16,6 +16,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
@@ -30,11 +32,14 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http)throws Exception{
         return http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(
-                        req-> req.requestMatchers("/api/auth/login/**","/api/BackOffice/agences","/api/client/demandeInscription/**").permitAll()
-                                .requestMatchers("/api/client/**").hasAnyAuthority("CLIENT")
-                                .requestMatchers("/api/agent/**").hasAnyAuthority("AGENT")
+                        req-> req.requestMatchers("/api/auth/login/**","/api/BackOffice/agences"
+                                        ,"/api/client/demandeInscription/**",
+                                        "/api/agence/**",
+                                        "/api/client/valableServicesByAgence/**").permitAll()
+                                .requestMatchers("/api/client/**","/api/auth/logout/**").hasAnyAuthority("CLIENT")
+                                .requestMatchers("/api/agent/**","/api/auth/logout/**").hasAnyAuthority("AGENT")
                                 .requestMatchers("/api/depot/**").hasAnyAuthority("CLIENT")
-                                .requestMatchers("/api/BackOffice/**").hasAnyAuthority("ADMIN")
+                                .requestMatchers("/api/BackOffice/**","/api/auth/logout/**").hasAnyAuthority("ADMIN")
                                 .anyRequest().authenticated()
                 ).userDetailsService(userDetailsImpl)
                 .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -42,6 +47,17 @@ public class SecurityConfig {
 
 
     }
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**").allowedOrigins("http://localhost:4200");
+            }
+        };
+    }
+
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();

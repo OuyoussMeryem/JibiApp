@@ -131,6 +131,17 @@ public class ServiceAgent {
         }
     }
 
+    public Agent modifierPassword(Long agentId,String nouveauPassword){
+        Optional<Agent> optionalAgent=agentRepo.findById(agentId);
+        if(optionalAgent.isPresent()){
+            Agent agent=optionalAgent.get();
+            agent.setPassword(passwordEncoder.encode(nouveauPassword));
+            return save(agent);
+        }else {
+            throw new RuntimeException("Agent introuvable avec l'ID : " + agentId);
+        }
+    }
+
     private boolean isUsernameUniqueForAgent(String username) {
         return !agentRepo.existsByUsername(username);
     }

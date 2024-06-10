@@ -75,6 +75,18 @@ public class AgentController {
         }
   }
 
+    @PutMapping("/{agentId}/modifierPassword")
+    public String  modifierPassword(@PathVariable Long agentId,
+                                    @RequestParam String nouveauPassword){
+        try {
+            serviceAgent.modifierPassword(agentId,nouveauPassword);
+            return "Identifiants mis à jour avec succès.";
+
+        }catch (Exception e){
+            return "Erreur lors de la mise à jour des identifiants : " + e.getMessage();
+        }
+    }
+
     @PutMapping("/updateClient/{clientId}")
     public ResponseEntity<?> updateClient(
             @PathVariable Long clientId,
