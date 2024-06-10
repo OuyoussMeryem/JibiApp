@@ -1,0 +1,19 @@
+<div class="container py-5">
+    <h1>Liste des Créanciers</h1>
+    <div class="row">
+      <div class="col-md-4" *ngFor="let creditor of creditors">
+        <div class="card mb-4 creditor-card">
+          <img [src]="creditor.image" class="card-img-top" alt="{{ creditor.name }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ creditor.name }}</h5>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item" *ngFor="let service of creditor.services">
+                <a (click)="goservice()">{{ service.name }}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

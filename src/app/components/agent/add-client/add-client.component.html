@@ -1,0 +1,65 @@
+<form [formGroup]="agentoffice" (ngSubmit)="onSubmit()">
+    <div class="card">
+      <div class="card-title">Informations personnelles</div>
+      <button  mat-raised-button color="accent" class=" mt-2 btn" (click)="goBack()">Retour</button>
+      <div class="card-content">
+        <div class="row">
+          <div class="form-field">
+            <input type="text" placeholder="Nom" formControlName="lastName" required>
+          </div>
+          <div class="form-field">
+            <input type="text" placeholder="Prénom" formControlName="firstName" required>
+          </div>
+        </div>
+        <div class="row">
+          
+          <div class="form-field">
+            <input type="text" placeholder="N° pièce d'identité" formControlName="idNumber" required>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-field">
+            <input type="date" placeholder="Date de naissance" formControlName="birthDate" required>
+          </div>
+          <div class="form-field">
+            <input type="text" placeholder="Adresse" formControlName="address" required>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-field">
+            <input type="email" placeholder="Email" formControlName="email" required>
+          </div>
+          
+        </div>
+        <div class="row">
+          <div class="form-field">
+            <input type="tel" placeholder="Numéro de téléphone" formControlName="phone" required>
+          </div>
+          
+        </div>
+       
+      </div>
+    </div>
+  
+    <div class="card">
+      <div class="card-title">Pièces jointes</div>
+      <div class="card-content">
+        <div class="row">
+          <div class="form-field">
+            <input type="text" placeholder="Description" formControlName="fileDescription">
+          </div>
+          <input type="file" (change)="onFileSelected($event)">
+          <button mat-icon-button color="accent" >
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+      </div>
+     
+    </div>
+
+    <div class="actions">
+      <button class="bt" type="submit">Enregistrer</button>
+      <button class="bt" type="button" (click)="onCancel()">Annuler</button>
+    </div>
+  </form>
+   

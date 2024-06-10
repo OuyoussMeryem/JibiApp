@@ -1,0 +1,58 @@
+<form [formGroup]="backoffice" (ngSubmit)="onSubmit()">
+    <div class="card">
+      <div class="card-title">Informations personnelles</div>
+      <button mat-raised-button color="accent" class="mt-2 btn" (click)="goBack()">Retour</button>
+      <div class="card-content">
+        <div class="row">
+          <div class="form-field">
+            <input type="text" placeholder="Nom" formControlName="nom" required>
+          </div>
+          <div class="form-field">
+            <input type="text" placeholder="Prénom" formControlName="prenom" required>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-field">
+            <input type="text" placeholder="N° pièce d'identité" formControlName="numPieceIdentite" required>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-field">
+            <input type="date" placeholder="Date de naissance" formControlName="dateNaissance" required>
+          </div>
+          <div class="form-field">
+            <input type="text" placeholder="Adresse" formControlName="adresse" required>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-field">
+            <input type="email" placeholder="Email" formControlName="email" required>
+          </div>
+          <div class="form-field">
+            <input type="email" placeholder="Confirmation Email" formControlName="confirmEmail" required>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-field">
+            <input type="tel" placeholder="Numéro de téléphone" formControlName="telephone" required>
+          </div>
+          <div class="form-field">
+            <input type="text" placeholder="N° de patente" formControlName="numPattente" required>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-field">
+            <input type="file" placeholder="Image pièce d'identité (recto)" formControlName="pieceIdentiteFaceOne" (change)="onFileSelected($event, 'pieceIdentiteFaceOne')" required>
+          </div>
+          <div class="form-field">
+            <input type="file" placeholder="Image pièce d'identité (verso)" formControlName="pieceIdentiteFaceTwo" (change)="onFileSelected($event, 'pieceIdentiteFaceTwo')" required>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="actions">
+      <button class="bt" type="submit">Ajouter</button>
+      <button class="bt" type="button" (click)="onCancel()">Annuler</button>
+    </div>
+  </form>
+  

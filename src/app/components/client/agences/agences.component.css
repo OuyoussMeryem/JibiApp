@@ -1,0 +1,60 @@
+/* Style pour la vue d'ensemble des créanciers */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+  }
+  
+  .creditor-card {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    transition: box-shadow .3s ease-in-out;
+  }
+  
+  .creditor-card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .card-img-top {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .card-body {
+    padding: 20px;
+  }
+  
+  .card-title {
+    font-size: 1.25rem;
+    margin-bottom: 15px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    color: #000;
+  }
+  
+  .list-group-item {
+    border: 0;
+    padding: 10px 15px;
+  }
+  
+  .list-group-item a {
+    color: #07c5ff;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color .3s;
+  }
+  
+  .list-group-item a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+  }
+  

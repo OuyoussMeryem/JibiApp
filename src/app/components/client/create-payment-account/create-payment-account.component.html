@@ -1,0 +1,63 @@
+<div class="container py-5">
+    <h1>Créer un compte de paiement</h1>
+    <form (ngSubmit)="onSubmit()" [formGroup]="createAccountForm">
+      <div class="card">
+        <div class="card-title">Type de compte</div>
+        <div class="card-content">
+          <div class="form-field">
+            
+            <select id="accountType" formControlName="accountType">
+              <option value="200">200</option>
+              <option value="5000">5000</option>
+              <option value="10000">10000</option>
+            </select>
+          </div>
+        </div>
+      
+  
+      
+        <div class="card-title">Prénom</div>
+        <div class="card-content">
+          <div class="form-field">
+          
+            <input id="firstName" formControlName="firstName">
+          </div>
+        </div>
+      
+  
+      
+        <div class="card-title">Nom</div>
+        <div class="card-content">
+          <div class="form-field">
+          
+            <input id="lastName" formControlName="lastName">
+          </div>
+        </div>
+      
+  
+      
+        <div class="card-title">Email</div>
+        <div class="card-content">
+          <div class="form-field">
+           
+            <input id="email" formControlName="email">
+          </div>
+        </div>
+       
+     
+        <div class="card-title">Téléphone</div>
+        <div class="card-content">
+          <div class="form-field">
+           
+            <input id="phone" formControlName="phone">
+          </div>
+        </div>
+      </div>
+  
+      <div class="actions">
+        <button type="submit" class="bt">Créer le compte</button>
+        <button type="button" class="bt" (click)="onCancel()">Annuler</button>
+      </div>
+    </form>
+  </div>
+  

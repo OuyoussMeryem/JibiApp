@@ -1,0 +1,36 @@
+<div class="container mt-5">
+    <button mat-raised-button color="accent" class="mb-3" routerLink="/add-agence">Ajouter une agence</button>
+    <h2>Liste des agences</h2>
+    <table mat-table [dataSource]="agences" class="mat-elevation-z8 table table-striped">
+      <ng-container matColumnDef="nom">
+        <th mat-header-cell *matHeaderCellDef>Nom</th>
+        <td mat-cell *matCellDef="let agence">{{ agence.nom }}</td>
+      </ng-container>
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef>Description</th>
+        <td mat-cell *matCellDef="let agence">{{ agence.description }}</td>
+      </ng-container>
+      <ng-container matColumnDef="Logo">
+        <th mat-header-cell *matHeaderCellDef>Logo</th>
+        <td mat-cell *matCellDef="let agence">
+            <img [src]="agence.image.imageUrl"  alt="" style="max-width: 100px; max-height: 100px;">
+        </td>
+      </ng-container>
+
+      
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let agence" >
+          <button mat-icon-button color="primary" (click)="editAgence(agence)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteAgence(agence)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+  

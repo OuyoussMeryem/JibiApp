@@ -1,0 +1,96 @@
+/* Style du formulaire */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+  }
+  
+  /* Style des cartes */
+  .card {
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 20px;
+    width: 100%;
+  }
+  
+  /* Style des titres de carte */
+  .card-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  /* Style des contenus de carte */
+  .card-content {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Style des champs de formulaire */
+  .form-field {
+    margin-bottom: 15px;
+  }
+  
+  .form-field input,
+  .form-field select {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    width: 100%;
+  }
+  
+  .form-field input[type="date"] {
+    appearance: none;
+  }
+  
+  /* Style des boutons */
+  .bt {
+    background-color: #cf408f;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .bt:hover {
+    background-color: #cf408f;
+  }
+  
+  /* Style des actions */
+  .actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    width: 100%;
+  }
+  
+  .btn {
+    
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease;
+  
+    /* Positionnement absolu */
+    position: absolute;
+    top: 0;
+    
+  
+    /* Ajout d'espace à gauche */
+    margin-left: 1100px; /* Ajustez cette valeur selon vos besoins */
+  }
+  
+  .btn:hover {
+    border: 2px solid #cf408f; /* Bord rose de 2 pixels */
+    background-color: #ffffff; /* Fond blanc */
+    color: #000000; /* Texte noir */
+  }

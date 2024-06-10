@@ -1,0 +1,31 @@
+<div class="container py-5">
+    <h1>Liste des factures Payée</h1>
+    <button class="btn btn-secondary mt-1" (click)="goBack()">Go Back</button>
+    <table class="table table-hover mt-3">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Date</th>
+          <th>Référence</th>
+          <th>Description</th>
+          <th>Créancier</th>
+          <th>Montant</th>
+          <th>Statut</th>
+         
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let invoice of invoices; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ invoice.date }}</td>
+          <td>{{ invoice.reference }}</td>
+          <td>{{ invoice.description }}</td>
+          <td>{{ invoice.creditor }}</td>
+          <td>{{ invoice.amount }} DH</td>
+          <td class="text-success">{{ invoice.status }}</td>
+          
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

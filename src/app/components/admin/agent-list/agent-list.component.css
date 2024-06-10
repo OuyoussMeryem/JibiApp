@@ -1,0 +1,45 @@
+.container {
+    position: relative;
+    
+  }
+
+  
+  .cc{
+    margin-left: 10px;
+    margin-right: 10px;
+    
+}
+
+  .bt {
+    
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease;
+  
+    /* Positionnement absolu */
+   
+    top: 0;
+    
+  
+    /* Ajout d'espace à gauche */
+    margin-left: 1025px; /* Ajustez cette valeur selon vos besoins */
+  }
+  
+  .bt:hover {
+    border: 2px solid #cf408f; /* Bord rose de 2 pixels */
+    background-color: #ffffff; /* Fond blanc */
+    color: #000000; /* Texte noir */
+  }
+
+  .button-cell {
+   
+    align-items: center;
+  }
+  
+
+  
+  

@@ -1,0 +1,21 @@
+.btn-custom {
+    background-color: #007bff; /* Couleur de fond par défaut */
+    color: white;             /* Couleur du texte par défaut */
+    border: 2px solid transparent; /* Bordure transparente par défaut */
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  }
+
+  .btn-custom:hover {
+    border-color: rgb(231, 95, 118);       /* Bordure rose au survol */
+    color: rgb(247, 244, 244);   
+    background-color: #0b0c0c;          /* Couleur du texte noir au survol */
+  }
+
+  .btn-custom:active {
+    background-color: pink;   /* Fond rose au clic */
+    color: black;             /* Couleur du texte noir au clic */
+  }
+
+  .navbar-nav .nav-link {
+    color: white !important;
+  }
