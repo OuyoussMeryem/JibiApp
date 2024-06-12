@@ -1,5 +1,6 @@
 package com.example.jibiapp.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -28,8 +29,10 @@ public class Agence {
     @JsonManagedReference
     private List<Service> services=new ArrayList<>();
     @OneToOne(mappedBy = "agence")
+    @JsonBackReference
     private CompteApplication compteApplication;
     @OneToOne
+    @JsonManagedReference
     private Image image;
 
 }

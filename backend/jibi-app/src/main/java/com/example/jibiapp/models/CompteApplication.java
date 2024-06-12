@@ -25,8 +25,10 @@ public class CompteApplication {
     @Enumerated(EnumType.STRING)
     private TypeCompte type_compte;
     @OneToOne
+    @JsonManagedReference
     private Client client;
     @OneToOne
+    @JsonManagedReference
     private Agence agence;
     @OneToMany(mappedBy = "compte", cascade = CascadeType.ALL)
     @JsonManagedReference

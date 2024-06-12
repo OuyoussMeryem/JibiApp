@@ -1,6 +1,8 @@
 package com.example.jibiapp.models;
 
 import com.example.jibiapp.enums.StatusTransaction;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,10 +25,13 @@ public class Transaction {
     private StatusTransaction statut;
     private Date date;
     @ManyToOne
-    private CompteApplication compte; // Compte associé à la transaction
+    @JsonBackReference
+    private CompteApplication compte;
     @OneToOne
-    private ActionService actionService; // Facture associée à la transaction
+    @JsonManagedReference
+    private ActionService actionService;
     @OneToOne
+    @JsonManagedReference
     private Paiment paiment;
 
 

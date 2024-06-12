@@ -1,5 +1,6 @@
 package com.example.jibiapp.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,10 +21,13 @@ public class Paiment {
     private Double montant;
     private LocalDateTime datePaiment;
     @OneToOne(mappedBy = "paiment")
+    @JsonBackReference
     private Transaction transaction;
     @ManyToOne
+    @JsonBackReference
     private Service service;
     @ManyToOne
+    @JsonBackReference
     private Client client;
 
 }

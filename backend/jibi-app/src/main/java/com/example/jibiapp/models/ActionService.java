@@ -2,6 +2,7 @@ package com.example.jibiapp.models;
 
 import com.example.jibiapp.enums.EtatActionService;
 import com.example.jibiapp.enums.serviceType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,10 +25,13 @@ public class ActionService {
     private EtatActionService etat;
     private LocalDateTime date;
     @ManyToOne
+    @JsonBackReference
     private Client client;
     @ManyToOne
+    @JsonBackReference
     private Service service;
     @OneToOne(mappedBy = "actionService")
+    @JsonBackReference
     private Transaction transaction;
 
 

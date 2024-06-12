@@ -2,6 +2,7 @@ package com.example.jibiapp.models;
 
 import com.example.jibiapp.enums.StatusTransaction;
 import com.example.jibiapp.enums.serviceType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,6 +28,7 @@ public class Service {
     private serviceType type;
     private boolean valable;
     @ManyToOne
+    @JsonBackReference
     private Agence agence;
     @OneToMany(mappedBy = "service", cascade = CascadeType.ALL)
     @JsonManagedReference

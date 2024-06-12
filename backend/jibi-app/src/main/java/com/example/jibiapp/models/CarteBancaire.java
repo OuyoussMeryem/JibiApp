@@ -1,5 +1,6 @@
 package com.example.jibiapp.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,6 +24,7 @@ public class CarteBancaire {
     private String codeCvv;
     private String typeCarte;
     @OneToOne(mappedBy = "carteBancaire")
+    @JsonBackReference
     private CompteBancaireFictif compteBancaireFictif;
 
 

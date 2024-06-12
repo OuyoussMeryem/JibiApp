@@ -32,7 +32,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http)throws Exception{
         return http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(
-                        req-> req.requestMatchers("/api/auth/login/**","/api/BackOffice/agences"
+                        req-> req.requestMatchers("/api/auth/login/**","/api/transactions/**","/api/BackOffice/agences"
                                         ,"/api/client/demandeInscription/**",
                                         "/api/agence/**",
                                         "/api/client/valableServicesByAgence/**").permitAll()
